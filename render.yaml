@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: student-placement-prediction
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -b 0.0.0.0:10000 app:app
+    envVars:
+      - key: FLASK_APP
+        value: app.py
+      - key: FLASK_ENV
+        value: production
+    healthCheckPath: /  # You can modify this path if your app has a specific health check route
+    branch: main  # Specify the branch you want to deploy (default is 'main')
+    autoDeploy: true  # Automatically deploy when code is pushed to the specified branch
